@@ -27,18 +27,18 @@ class IPConnection:
         self.ports.append((src_port, dest_port))
 
     def get_label(self) -> str:
-        unique_ports = list(set(self.ports))
-        num_ports = len(unique_ports)
+        unique_dest_ports = set(x[1] for x in self.ports)
+        num_dest_ports = len(unique_dest_ports)
         label = ''
-        for i in range(num_ports):
-            if i > 0:
+        for count, port in enumerate(unique_dest_ports):
+            if count > 0:
                 label += ', '
-            if i == 5:
+            if count == 5:
                 label += '...'
                 break
-            label += unique_ports[i][1]
+            label += port
 
-        label += f' ({str(num_ports)})'
+        label += f' ({str(num_dest_ports)})'
         return label
 
     def __eq__(self, other) -> bool:
